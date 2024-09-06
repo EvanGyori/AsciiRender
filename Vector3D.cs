@@ -27,7 +27,7 @@ public struct Vector3D
 		z /= length;
 	}
 	
-	// Returns a cross b. a X b
+	// Returns the cross product between vectors a and b
 	public static Vector3D CrossProduct(Vector3D a, Vector3D b)
 	{
 		return new Vector3D(
@@ -35,5 +35,11 @@ public struct Vector3D
 			a.GetZ() * b.GetX() - a.GetX() * b.GetZ(),
 			a.GetX() * b.GetY() - a.GetY() * b.GetX()
 			);
+	}
+	
+	// Returns the dot product between vectors a and b
+	public static double DotProduct(Vector3D a, Vector3D b)
+	{
+		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 }
