@@ -20,13 +20,24 @@ public class BrightnessBuffer
 		buffer = new Pixel[width, height];
 	}
 	
-	// Sets a pixel at a point to a brightness if it is in camera view and not being blocked by other pixels
-	public void WritePoint(int x, int y, double z, double brightness)
+	// Sets a pixel at a point to a brightness
+	public void SetPixel(int x, int y, double z, double brightness)
 	{
-		if ((buffer[x, y].z == 0 || z < buffer[x, y].z) && z > 0) {
-			buffer[x, y].brightness = brightness;
-			buffer[x, y].z = z;
-		}
+		buffer[x, y].brightness = brightness;
+		buffer[x, y].z = z;
+	}
+	
+	// Returns whether the given coordinates are in the range in be in the buffer
+	public bool IsPixelInBoundaries(int x, int y)
+	{
+		return (0 <= x && x < buffer.GetLength(0)) && (0 <= y && y < buffer.GetLength(1));
+	}
+	
+	// Returns whether there is another pixel in front and would be blocking the view of the given pixel
+	public bool IsPixelBlocked(int x, int y, double z)
+	{
+		// z values of 0 indicate an unset pixel
+		return buffer[x, y].z > 0 && buffer[x, y].z <= z && z > 0;
 	}
 	
 	public override string ToString()
