@@ -43,10 +43,10 @@ public class Renderer
 		double dv = (domain.GetHeight() - domain.GetY()) / vSteps;
 		
 		double u = domain.GetX();
-		double v = domain.GetY();
 		// Loop executed +1 time to include the end of the domain
 		// so that the domain is closed
 		for (int i = 0; i <= uSteps; i++) {
+			double v = domain.GetY();
 			for (int j = 0; j <= vSteps; j++) {
 				WritePixelToBuffer(buffer, obj, u, v, pixelsPerUnitLength);
 				v += dv;
