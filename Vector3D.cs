@@ -27,19 +27,25 @@ public struct Vector3D
 		z /= length;
 	}
 	
-	// Returns the cross product between vectors a and b
-	public static Vector3D CrossProduct(Vector3D a, Vector3D b)
+	// Returns the cross product between vectors lhs and rhs
+	public static Vector3D CrossProduct(Vector3D lhs, Vector3D rhs)
 	{
 		return new Vector3D(
-			a.GetY() * b.GetZ() - a.GetZ() * b.GetY(),
-			a.GetZ() * b.GetX() - a.GetX() * b.GetZ(),
-			a.GetX() * b.GetY() - a.GetY() * b.GetX()
+			lhs.GetY() * rhs.GetZ() - lhs.GetZ() * rhs.GetY(),
+			lhs.GetZ() * rhs.GetX() - lhs.GetX() * rhs.GetZ(),
+			lhs.GetX() * rhs.GetY() - lhs.GetY() * rhs.GetX()
 			);
 	}
 	
-	// Returns the dot product between vectors a and b
-	public static double DotProduct(Vector3D a, Vector3D b)
+	// Returns the dot product between vectors lhs and rhs
+	public static double DotProduct(Vector3D lhs, Vector3D rhs)
 	{
-		return a.x * b.x + a.y * b.y + a.z * b.z;
+		return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+	}
+	
+	// Adds two vectors
+	public static Vector3D operator +(Vector3D lhs, Vector3D rhs)
+	{
+		return new Vector3D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
 	}
 }
