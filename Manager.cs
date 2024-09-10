@@ -60,7 +60,8 @@ public class Manager
 	void DrawDebug(DateTime initialTime)
 	{
 		TimeSpan dt = DateTime.Now.Subtract(initialTime);
-		int FPS = Math.Min((int)Math.Ceiling(1.0 / dt.TotalSeconds), (int)Math.Floor(FPSLimit));
-		WriteLine("FPS: " + FPS);
+		int FPS = (int)Math.Ceiling(1.0 / dt.TotalSeconds);
+		int limitedFPS = Math.Min(FPS, (int)Math.Floor(FPSLimit));
+		WriteLine("FPS: " + FPS + "  limited FPS: " + limitedFPS);
 	}
 }
