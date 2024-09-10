@@ -1,11 +1,11 @@
-namespace Objects.Decorators;
+namespace Surfaces.Decorators;
 
-// Applies customizable functionality on top of a concrete object.
-public abstract class Decorator : Object
+// Applies customizable functionality on top of a concrete surface.
+public abstract class Decorator : Surface
 {
-	Object next;
+	Surface next;
 	
-	public Decorator(Object next)
+	public Decorator(Surface next)
 	{
 		this.next = next;
 	}

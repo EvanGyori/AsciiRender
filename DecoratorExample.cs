@@ -1,8 +1,8 @@
-namespace Objects.Decorators;
+namespace Surfaces.Decorators;
 
 public class Example : Decorator
 {
-	public Example(Object next) : base(next)
+	public Example(Surface next) : base(next)
 	{	
 	}
 	

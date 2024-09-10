@@ -1,4 +1,4 @@
-// Takes in objects and outputs a string of ascii characters resembling the objects rendered
+// Takes in surfaceects and outputs a string of ascii characters resembling the surfaceects rendered
 public class Renderer
 {
 	readonly Vector3D sunDirection;
@@ -13,32 +13,32 @@ public class Renderer
 	}
 	
 	/*
-	 Returns a string of a screen to which the given objs were rendered to.
+	 Returns a string of a screen to which the given surfaces were rendered to.
 	 
 	 screenWidth and screenHeight are the number of characters.
 	 pixelsPerUnitLength determines the level of resolution
 	*/
-	public string Render(Object[] objs, int screenWidth, int screenHeight, double pixelsPerUnitLength)
+	public string Render(Surface[] surfaces, int screenWidth, int screenHeight, double pixelsPerUnitLength)
 	{
 		BrightnessBuffer buffer = new(screenWidth, screenHeight);
-		foreach (Object obj in objs) {
-			WriteObjectToBuffer(buffer, obj, pixelsPerUnitLength);
+		foreach (Surface surface in surfaces) {
+			WritesurfaceectToBuffer(buffer, surface, pixelsPerUnitLength);
 		}
 		
 		return buffer.ToString();
 	}
 	
 	/*
- 	 Writes one object to the brightness buffer.
+ 	 Writes one surface to the brightness buffer.
 	 
-	 Goes through a discrete set of u and v values in the object surface's domain
+	 Goes through a discrete set of u and v values in the surface surface's domain
 	 to draw each pixel.
 	*/
-	void WriteObjectToBuffer(BrightnessBuffer buffer, Object obj, double pixelsPerUnitLength)
+	void WritesurfaceectToBuffer(BrightnessBuffer buffer, Surface surface, double pixelsPerUnitLength)
 	{
-		Rect domain = obj.GetDomain();
-		int uSteps = obj.GetUSteps();
-		int vSteps = obj.GetVSteps();
+		Rect domain = surface.GetDomain();
+		int uSteps = surface.GetUSteps();
+		int vSteps = surface.GetVSteps();
 		double du = (domain.GetWidth() - domain.GetX()) / uSteps;
 		double dv = (domain.GetHeight() - domain.GetY()) / vSteps;
 		
@@ -48,31 +48,31 @@ public class Renderer
 		for (int i = 0; i <= uSteps; i++) {
 			double v = domain.GetY();
 			for (int j = 0; j <= vSteps; j++) {
-				WritePixelToBuffer(buffer, obj, u, v, pixelsPerUnitLength);
+				WritePixelToBuffer(buffer, surface, u, v, pixelsPerUnitLength);
 				v += dv;
 			}
 			u += du;
 		}
 	}
 	
-	// For specific u and v values, determines and writes a pixel of an object to the brightness buffer
-	void WritePixelToBuffer(BrightnessBuffer buffer, Object obj, double u, double v, double pixelsPerUnitLength)
+	// For specific u and v values, determines and writes a pixel of an surface to the brightness buffer
+	void WritePixelToBuffer(BrightnessBuffer buffer, Surface surface, double u, double v, double pixelsPerUnitLength)
 	{
 		double time = 0.0; // TODO get time
-		Vector3D position = ApplyUniversalFunction(obj.GetPosition(u, v, time));
+		Vector3D position = ApplyUniversalFunction(surface.GetPosition(u, v, time));
 		// Map point to a pixel that can fit on the buffer
 		int x = (int)System.Math.Floor(position.GetX() * pixelsPerUnitLength);
 		int y = (int)System.Math.Floor(position.GetY() * pixelsPerUnitLength);
 		
 		// checks if pixel can be seen
 		if (buffer.IsPixelInBoundaries(x, y) && !buffer.IsPixelBlocked(x, y, position.GetZ())) {
-			double brightness = Vector3D.DotProduct(sunDirection, obj.GetNormal(u, v, time));
+			double brightness = Vector3D.DotProduct(sunDirection, surface.GetNormal(u, v, time));
 			buffer.SetPixel(x, y, position.GetZ(), brightness);
 		}
 	}
 	
 	/*
-	 The function that is apply to all object positions.
+	 The function that is apply to all surfaceect positions.
 	 
 	 An orthographic perspective is achieved by returning the position as is.
 	*/

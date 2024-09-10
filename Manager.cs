@@ -1,6 +1,8 @@
 using static System.Console;
 using System.Globalization;
-using System;
+using Math = System.Math;
+using DateTime = System.DateTime;
+using TimeSpan = System.TimeSpan;
 
 // Handles the AsciiRender program
 // Supply the surfaces and use the Run method
@@ -8,14 +10,14 @@ public class Manager
 {
 	Vector3D sunDirection;
 	double FPSLimit = 20;
-	Object[] objs;
+	Surface[] surfaces;
 	Renderer renderer;
 	
 	// sunDirection must be a unit vector pointing in the direction of the sun.
-	public Manager(Vector3D sunDirection, params Object[] objs)
+	public Manager(Vector3D sunDirection, params Surface[] surfaces)
 	{
 		this.sunDirection = sunDirection;
-		this.objs = objs;
+		this.surfaces = surfaces;
 		renderer = new Renderer(sunDirection);
 	}
 	
@@ -33,15 +35,15 @@ public class Manager
 	{
 		DateTime initialTime = DateTime.Now;
 		Clear();
-		DrawObjects();
+		Drawsurfaceects();
 		DrawDebug(initialTime);
 		if (FPSLimit > 0)
 			LimitFPS(initialTime);
 	}
 	
-	void DrawObjects()
+	void Drawsurfaceects()
 	{
-		WriteLine(renderer.Render(objs, 10, 10, 1.0));
+		WriteLine(renderer.Render(surfaces, 10, 10, 1.0));
 	}
 	
 	// Pauses the program temporarily to limit FPS
@@ -58,7 +60,7 @@ public class Manager
 	void DrawDebug(DateTime initialTime)
 	{
 		TimeSpan dt = DateTime.Now.Subtract(initialTime);
-		int FPS = Math.Min((int)Math.Ceiling(1.0 / dt.TotalSeconds), FPSLimit);
+		int FPS = Math.Min((int)Math.Ceiling(1.0 / dt.TotalSeconds), (int)Math.Floor(FPSLimit));
 		WriteLine("FPS: " + FPS);
 	}
 }

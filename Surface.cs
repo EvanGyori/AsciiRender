@@ -1,5 +1,5 @@
-// Classes that implement the Object interface are parametric surfaces that can be used for calculations or drawn
-public abstract class Object
+// Classes that implement the Surface interface are parametric surfaces that can be used for calculations or drawn
+public abstract class Surface
 {
 	// x, y, and z components of the surface parameterized by u and v.
 	public abstract Vector3D GetPosition(double u, double v, double time);

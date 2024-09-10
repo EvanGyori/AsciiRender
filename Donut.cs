@@ -1,7 +1,7 @@
-namespace Objects;
+namespace Surfaces;
 using Math = System.Math;
 
-public class Donut : Object
+public class Donut : Surface
 {
 	double radius;
 	double thickness;
