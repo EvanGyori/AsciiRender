@@ -5,21 +5,19 @@ public class Donut : Surface
 {
 	double radius;
 	double thickness;
-	Vector3D position;
 	
-	public Donut(Vector3D position, double radius, double thickness)
+	public Donut(double radius, double thickness)
 	{
 		this.radius = radius;
 		this.thickness = thickness;
-		this.position = position;
 	}
 	
 	public override Vector3D GetPosition(double u, double v, double time)
 	{
 		return new Vector3D(
-			radius * Math.Cos(u) + thickness * Math.Cos(v) * Math.Cos(u) + position.GetX(),
-			radius * Math.Sin(u) + thickness * Math.Cos(v) * Math.Sin(u) + position.GetY(),
-			thickness * Math.Sin(v) + position.GetZ()
+			radius * Math.Cos(u) + thickness * Math.Cos(v) * Math.Cos(u),
+			radius * Math.Sin(u) + thickness * Math.Cos(v) * Math.Sin(u),
+			thickness * Math.Sin(v)
 		);
 	}
 	
