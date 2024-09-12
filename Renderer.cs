@@ -1,7 +1,12 @@
+using System.Diagnostics;
+using TimeSpan = System.TimeSpan;
+using DateTime = System.DateTime;
+
 // Takes in surfaceects and outputs a string of ascii characters resembling the surfaceects rendered
 public class Renderer
 {
 	readonly Vector3D sunDirection;
+	double time;
 	
 	/*
 	 sunDirection must be a normal vector pointing from the center to where the sun is at
@@ -21,8 +26,9 @@ public class Renderer
 	public string Render(Surface[] surfaces, int screenWidth, int screenHeight, double pixelsPerUnitLength)
 	{
 		BrightnessBuffer buffer = new(screenWidth, screenHeight);
+		time = GetTime();
 		foreach (Surface surface in surfaces) {
-			WritesurfaceectToBuffer(buffer, surface, pixelsPerUnitLength);
+			WriteSurfaceToBuffer(buffer, surface, pixelsPerUnitLength);
 		}
 		
 		return buffer.ToString();
@@ -34,7 +40,7 @@ public class Renderer
 	 Goes through a discrete set of u and v values in the surface surface's domain
 	 to draw each pixel.
 	*/
-	void WritesurfaceectToBuffer(BrightnessBuffer buffer, Surface surface, double pixelsPerUnitLength)
+	void WriteSurfaceToBuffer(BrightnessBuffer buffer, Surface surface, double pixelsPerUnitLength)
 	{
 		Rect domain = surface.GetDomain();
 		int uSteps = surface.GetUSteps();
@@ -58,7 +64,6 @@ public class Renderer
 	// For specific u and v values, determines and writes a pixel of an surface to the brightness buffer
 	void WritePixelToBuffer(BrightnessBuffer buffer, Surface surface, double u, double v, double pixelsPerUnitLength)
 	{
-		double time = 0.0; // TODO get time
 		Vector3D position = ApplyUniversalFunction(surface.GetPosition(u, v, time));
 		// Map point to a pixel that can fit on the buffer
 		int x = (int)System.Math.Floor(position.GetX() * pixelsPerUnitLength);
@@ -79,5 +84,11 @@ public class Renderer
 	Vector3D ApplyUniversalFunction(Vector3D position)
 	{
 		return position; // No changes creates an orthographic perspective
+	}
+	
+	double GetTime()
+	{
+		TimeSpan timeElapsed = DateTime.Now.Subtract(Process.GetCurrentProcess().StartTime);
+		return timeElapsed.TotalSeconds;
 	}
 }

@@ -9,7 +9,7 @@ using TimeSpan = System.TimeSpan;
 public class Manager
 {
 	Vector3D sunDirection;
-	double FPSLimit = 20;
+	double FPSLimit = 10;
 	Surface[] surfaces;
 	Renderer renderer;
 	
@@ -34,16 +34,12 @@ public class Manager
 	void Update()
 	{
 		DateTime initialTime = DateTime.Now;
+		string screen = renderer.Render(surfaces, 60, 40, 3.0);
 		Clear();
-		Drawsurfaceects();
+		WriteLine(screen);
 		DrawDebug(initialTime);
 		if (FPSLimit > 0)
 			LimitFPS(initialTime);
-	}
-	
-	void Drawsurfaceects()
-	{
-		WriteLine(renderer.Render(surfaces, 10, 10, 1.0));
 	}
 	
 	// Pauses the program temporarily to limit FPS
