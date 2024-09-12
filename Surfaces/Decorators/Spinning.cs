@@ -9,7 +9,7 @@ public class Spinning : Rotation
 	
 	public override Vector3D GetPosition(double u, double v, double time)
 	{
-		base.SetAngles(0.0, time);
+		base.SetAngles(time, time);
 		return base.GetPosition(u, v, time);
 	}
 }

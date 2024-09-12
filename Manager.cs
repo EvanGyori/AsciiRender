@@ -34,7 +34,7 @@ public class Manager
 	void Update()
 	{
 		DateTime initialTime = DateTime.Now;
-		string screen = renderer.Render(surfaces, 100, 40, 6.0);
+		string screen = renderer.Render(surfaces, 120, 50, 5.0);
 		SetCursorPosition(0, 0);
 		WriteLine(screen);
 		DrawDebug(initialTime);
