@@ -3,12 +3,12 @@ using Math = System.Math;
 
 public class Rotation : Decorator
 {
-	double yzAngle, xyAngle;
+	double yzAngle, xzAngle;
 	
-	public Rotation(double yzAngle, double xyAngle, Surface next) : base(next)
+	public Rotation(double yzAngle, double xzAngle, Surface next) : base(next)
 	{
 		this.yzAngle = yzAngle;
-		this.xyAngle = xyAngle;
+		this.xzAngle = xzAngle;
 	}
 	
 	public override Vector3D GetPosition(double u, double v, double time)
@@ -28,10 +28,10 @@ public class Rotation : Decorator
 		return RotateAboutYAxis(RotateAboutXAxis(base.GetDerivativeWithV(u, v, time)));
 	}
 	
-	public void SetAngles(double yzAngle, double xyAngle)
+	public void SetAngles(double yzAngle, double xzAngle)
 	{
 		this.yzAngle = yzAngle;
-		this.xyAngle = xyAngle;
+		this.xzAngle = xzAngle;
 	}
 	
 	Vector3D RotateAboutXAxis(Vector3D position)
@@ -46,9 +46,9 @@ public class Rotation : Decorator
 	Vector3D RotateAboutYAxis(Vector3D position)
 	{
 		return new Vector3D(
-			position.GetX() * Math.Cos(xyAngle) + position.GetZ() * Math.Sin(xyAngle),
+			position.GetX() * Math.Cos(xzAngle) + position.GetZ() * Math.Sin(xzAngle),
 			position.GetY(),
-			-1 * position.GetX() * Math.Sin(xyAngle) + position.GetZ() * Math.Cos(xyAngle)
+			-1 * position.GetX() * Math.Sin(xzAngle) + position.GetZ() * Math.Cos(xzAngle)
 		);
 	}
 }

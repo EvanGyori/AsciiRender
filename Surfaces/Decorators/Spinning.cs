@@ -1,4 +1,5 @@
 namespace Surfaces.Decorators;
+using Math = System.Math;
 
 public class Spinning : Rotation
 {
@@ -8,7 +9,7 @@ public class Spinning : Rotation
 	
 	public override Vector3D GetPosition(double u, double v, double time)
 	{
-		base.SetAngles(time, time);
+		base.SetAngles(0.0, time);
 		return base.GetPosition(u, v, time);
 	}
 }

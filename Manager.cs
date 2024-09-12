@@ -34,8 +34,8 @@ public class Manager
 	void Update()
 	{
 		DateTime initialTime = DateTime.Now;
-		string screen = renderer.Render(surfaces, 60, 40, 3.0);
-		Clear();
+		string screen = renderer.Render(surfaces, 100, 40, 6.0);
+		SetCursorPosition(0, 0);
 		WriteLine(screen);
 		DrawDebug(initialTime);
 		if (FPSLimit > 0)
