@@ -9,14 +9,16 @@ using TimeSpan = System.TimeSpan;
 public class Manager
 {
 	Vector3D sunDirection;
-	double FPSLimit = 10;
+	double FPSLimit = 0;
+	double pixelsPerUnitLength;
 	Surface[] surfaces;
 	Renderer renderer;
 	
 	// sunDirection must be a unit vector pointing in the direction of the sun.
-	public Manager(Vector3D sunDirection, params Surface[] surfaces)
+	public Manager(Vector3D sunDirection, double pixelsPerUnitLength, params Surface[] surfaces)
 	{
 		this.sunDirection = sunDirection;
+		this.pixelsPerUnitLength = pixelsPerUnitLength;
 		this.surfaces = surfaces;
 		renderer = new Renderer(sunDirection);
 	}
@@ -34,7 +36,7 @@ public class Manager
 	void Update()
 	{
 		DateTime initialTime = DateTime.Now;
-		string screen = renderer.Render(surfaces, 120, 50, 5.0);
+		string screen = renderer.Render(surfaces, WindowWidth - 1, WindowHeight - 3, pixelsPerUnitLength);
 		SetCursorPosition(0, 0);
 		WriteLine(screen);
 		DrawDebug(initialTime);

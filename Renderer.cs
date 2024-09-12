@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using TimeSpan = System.TimeSpan;
 using DateTime = System.DateTime;
+using Math = System.Math;
 
 // Takes in surfaceects and outputs a string of ascii characters resembling the surfaceects rendered
 public class Renderer
@@ -71,7 +72,7 @@ public class Renderer
 		
 		// checks if pixel can be seen
 		if (buffer.IsPixelInBoundaries(x, y) && !buffer.IsPixelBlocked(x, y, position.GetZ())) {
-			double brightness = Vector3D.DotProduct(sunDirection, surface.GetNormal(u, v, time));
+			double brightness = Math.Max(0.01, Vector3D.DotProduct(sunDirection, surface.GetNormal(u, v, time)));
 			buffer.SetPixel(x, y, position.GetZ(), brightness);
 		}
 	}
