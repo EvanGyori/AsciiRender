@@ -18,8 +18,8 @@ public class Swirly : Surface
 		return new Rect(0, 0, 1, 1);
 	}
 	
-	public override int GetUSteps() => 400;
-	public override int GetVSteps() => 400;
+	public override int GetUSteps() => 250;
+	public override int GetVSteps() => 250;
 	
 	public override Vector3D GetDerivativeWithU(double u, double v, double time)
 	{
