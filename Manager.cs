@@ -26,11 +26,16 @@ public class Manager
 	// Prints the surfaces in an infinite loop
 	public void Run()
 	{
-		CursorVisible = false;
 		while (true)
 		{
-			if (KeyAvailable && ReadKey().Key == System.ConsoleKey.W) {
-				pixelsPerUnitLength += 0.1;
+			CursorVisible = false;
+			if (KeyAvailable) {
+				var key = ReadKey().Key;
+				if (key == System.ConsoleKey.W) {
+					pixelsPerUnitLength += 0.1;
+				} else if (key == System.ConsoleKey.S) {
+					pixelsPerUnitLength -= 0.1;
+				}
 			}
 			Update();
 		}
