@@ -26,6 +26,7 @@ public class Manager
 	// Prints the surfaces in an infinite loop
 	public void Run()
 	{
+		Clear();
 		while (true)
 		{
 			CursorVisible = false;
