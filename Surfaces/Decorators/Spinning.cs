@@ -3,18 +3,16 @@ using Math = System.Math;
 
 public class Spinning : Rotation
 {
-	double yzRate, xzRate, xyRate;
+	Vector3D rotationRate;
 	
-	public Spinning(double yzRate, double xzRate, double xyRate, Surface next) : base(0, 0, 0, next)
+	public Spinning(Vector3D rotationRate, Surface next) : base(new Vector3D(0, 0, 0), next)
 	{
-		this.yzRate = yzRate;
-		this.xzRate = xzRate;
-		this.xyRate = xyRate;
+		this.rotationRate = rotationRate;
 	}
 	
 	public override Vector3D GetPosition(double u, double v, double time)
 	{
-		base.SetAngles(yzRate * time, xzRate * time, xyRate * time);
+		base.SetAngles(rotationRate * time);
 		return base.GetPosition(u, v, time);
 	}
 }

@@ -1,4 +1,6 @@
-public struct Vector3D
+using Math = System.Math;
+
+public class Vector3D
 {
 	double x, y, z;
 	
@@ -31,9 +33,9 @@ public struct Vector3D
 	public static Vector3D CrossProduct(Vector3D lhs, Vector3D rhs)
 	{
 		return new Vector3D(
-			lhs.GetY() * rhs.GetZ() - lhs.GetZ() * rhs.GetY(),
-			lhs.GetZ() * rhs.GetX() - lhs.GetX() * rhs.GetZ(),
-			lhs.GetX() * rhs.GetY() - lhs.GetY() * rhs.GetX()
+			lhs.y * rhs.z - lhs.z * rhs.y,
+			lhs.z * rhs.x - lhs.x * rhs.z,
+			lhs.x * rhs.y - lhs.y * rhs.x
 			);
 	}
 	
@@ -47,5 +49,43 @@ public struct Vector3D
 	public static Vector3D operator +(Vector3D lhs, Vector3D rhs)
 	{
 		return new Vector3D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+	}
+	
+	public static Vector3D operator -(Vector3D lhs, Vector3D rhs)
+	{
+		return new Vector3D(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+	}
+	
+	public static Vector3D operator *(Vector3D vector, double factor)
+	{
+		return new Vector3D(factor * vector.x, factor * vector.y, factor * vector.z);
+	}
+	
+	public void RotateXYZ(Vector3D rotation)
+	{
+		RotateAboutXAxis(rotation.x);
+		RotateAboutYAxis(rotation.y);
+		RotateAboutZAxis(rotation.z);
+	}
+	
+	public void RotateAboutXAxis(double yzAngle)
+	{
+		double y_0 = y;
+		y = y * Math.Cos(yzAngle) - z * Math.Sin(yzAngle);
+		z = y_0 * Math.Sin(yzAngle) + z * Math.Cos(yzAngle);
+	}
+	
+	public void RotateAboutYAxis(double xzAngle)
+	{
+		double x_0 = x;
+		x = x * Math.Cos(xzAngle) - z * Math.Sin(xzAngle);
+		z = x_0 * Math.Sin(xzAngle) + z * Math.Cos(xzAngle);
+	}
+	
+	public void RotateAboutZAxis(double xyAngle)
+	{
+		double x_0 = x;
+		x = x * Math.Cos(xyAngle) - y * Math.Sin(xyAngle);
+		y = x_0 * Math.Sin(xyAngle) + y * Math.Cos(xyAngle);
 	}
 }

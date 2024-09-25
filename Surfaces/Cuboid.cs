@@ -15,21 +15,21 @@ public class Cuboid : Surface
 		this.length = length;
 		
 		top = new Decorators.Position(new Vector3D(0, -height / 2, 0), 
-			new Decorators.Rotation(PI / 2, 0, 0,
+			new Decorators.Rotation(new Vector3D(PI / 2, 0, 0),
 			new Plane(width, length)));
 		bottom = new Decorators.Position(new Vector3D(0, height / 2, 0),
-			new Decorators.Rotation(-PI / 2, 0, 0,
+			new Decorators.Rotation(new Vector3D(-PI / 2, 0, 0),
 			new Plane(width, length)));
 		front = new Decorators.Position(new Vector3D(0, 0, -length / 2),
-			new Decorators.Rotation(PI, 0, 0,
+			new Decorators.Rotation(new Vector3D(PI, 0, 0),
 			new Plane(width, height)));
 		back = new Decorators.Position(new Vector3D(0, 0, length / 2),
 			new Plane(width, height));
 		right = new Decorators.Position(new Vector3D(width / 2, 0, 0),
-			new Decorators.Rotation(0, -PI / 2, 0,
+			new Decorators.Rotation(new Vector3D(0, -PI / 2, 0),
 			new Plane(length, height)));
 		left = new Decorators.Position(new Vector3D(-width / 2, 0, 0),
-			new Decorators.Rotation(0, PI / 2, 0,
+			new Decorators.Rotation(new Vector3D(0, PI / 2, 0),
 			new Plane(length, height)));
 	}
 	
@@ -58,8 +58,8 @@ public class Cuboid : Surface
 	
 	public override Rect GetDomain() => new(0, 0, 6, 1);
 	
-	public override int GetUSteps() => 10 * 6 * (int)Math.Floor(Math.Max(width, length));
-	public override int GetVSteps() => 10 * (int)Math.Floor(Math.Max(height, length));
+	public override int GetUSteps() => 3 * 6 * (int)Math.Floor(Math.Max(width, length));
+	public override int GetVSteps() => 3 * (int)Math.Floor(Math.Max(height, length));
 	
 	public override Vector3D GetDerivativeWithU(double u, double v, double time)
 	{
