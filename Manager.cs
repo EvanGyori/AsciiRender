@@ -10,17 +10,17 @@ public class Manager
 {
 	Vector3D sunDirection;
 	double FPSLimit = 0;
-	double pixelsPerUnitLength;
 	Surface[] surfaces;
 	Renderer renderer;
+	Camera camera;
 	
 	// sunDirection must be a unit vector pointing in the direction of the sun.
-	public Manager(Vector3D sunDirection, double pixelsPerUnitLength, params Surface[] surfaces)
+	public Manager(Vector3D sunDirection, Camera camera, params Surface[] surfaces)
 	{
 		this.sunDirection = sunDirection;
-		this.pixelsPerUnitLength = pixelsPerUnitLength;
 		this.surfaces = surfaces;
-		renderer = new Renderer(sunDirection);
+		renderer = new Renderer(sunDirection, camera);
+		this.camera = camera;
 	}
 	
 	// Prints the surfaces in an infinite loop
@@ -29,7 +29,7 @@ public class Manager
 		Clear();
 		while (true)
 		{
-			CursorVisible = false;
+			/*
 			if (KeyAvailable) {
 				var key = ReadKey().Key;
 				if (key == System.ConsoleKey.W) {
@@ -38,6 +38,7 @@ public class Manager
 					pixelsPerUnitLength -= 0.1;
 				}
 			}
+			*/
 			Update();
 		}
 	}
@@ -46,9 +47,8 @@ public class Manager
 	void Update()
 	{
 		DateTime initialTime = DateTime.Now;
-		string screen = renderer.Render(surfaces, WindowWidth - 1, WindowHeight - 3, pixelsPerUnitLength);
-		SetCursorPosition(0, 0);
-		WriteLine(screen);
+		CursorVisible = false;
+		DrawScreen();
 		DrawDebug(initialTime);
 		if (FPSLimit > 0)
 			LimitFPS(initialTime);
@@ -62,6 +62,14 @@ public class Manager
 		if (dt.CompareTo(limit) < 0) {
 			System.Threading.Thread.Sleep(limit.Subtract(dt));
 		}
+	}
+	
+	// Displays the surfaces
+	void DrawScreen()
+	{
+		string screen = renderer.Render(surfaces);
+		SetCursorPosition(0, 0);
+		WriteLine(screen);
 	}
 	
 	// Displays debug info such as FPS

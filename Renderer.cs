@@ -7,29 +7,36 @@ using Math = System.Math;
 public class Renderer
 {
 	readonly Vector3D sunDirection;
+	readonly Camera camera;
 	double time;
 	
 	/*
 	 sunDirection must be a normal vector pointing from the center to where the sun is at
 	 to determine the direction of light.
 	*/
-	public Renderer(Vector3D sunDirection)
+	public Renderer(Vector3D sunDirection, Camera camera)
 	{
 		this.sunDirection = sunDirection;
+		this.camera = camera;
 	}
 	
 	/*
 	 Returns a string of a screen to which the given surfaces were rendered to.
 	 
-	 screenWidth and screenHeight are the number of characters.
-	 pixelsPerUnitLength determines the level of resolution
+	 screenWidth and screenHeight are the number of characters for the width and height of the output buffer.
+	 Default value of zero using the terminal's max size
 	*/
-	public string Render(Surface[] surfaces, int screenWidth, int screenHeight, double pixelsPerUnitLength)
+	public string Render(Surface[] surfaces, int screenWidth = 0, int screenHeight = 0)
 	{
+		if (screenWidth == 0)
+			screenWidth = System.Console.WindowWidth - 1;
+		if (screenHeight == 0)
+			screenHeight = System.Console.WindowHeight - 3;
+		
 		BrightnessBuffer buffer = new(screenWidth, screenHeight);
 		time = GetTime();
 		foreach (Surface surface in surfaces) {
-			WriteSurfaceToBuffer(buffer, surface, pixelsPerUnitLength);
+			WriteSurfaceToBuffer(buffer, surface);
 		}
 		
 		return buffer.ToString();
@@ -41,7 +48,7 @@ public class Renderer
 	 Goes through a discrete set of u and v values in the surface surface's domain
 	 to draw each pixel.
 	*/
-	void WriteSurfaceToBuffer(BrightnessBuffer buffer, Surface surface, double pixelsPerUnitLength)
+	void WriteSurfaceToBuffer(BrightnessBuffer buffer, Surface surface)
 	{
 		Rect domain = surface.GetDomain();
 		int uSteps = surface.GetUSteps();
@@ -55,7 +62,7 @@ public class Renderer
 		for (int i = 0; i <= uSteps; i++) {
 			double v = domain.GetY();
 			for (int j = 0; j <= vSteps; j++) {
-				WritePixelToBuffer(buffer, surface, u, v, pixelsPerUnitLength);
+				WritePixelToBuffer(buffer, surface, u, v);
 				v += dv;
 			}
 			u += du;
@@ -63,28 +70,24 @@ public class Renderer
 	}
 	
 	// For specific u and v values, determines and writes a pixel of an surface to the brightness buffer
-	void WritePixelToBuffer(BrightnessBuffer buffer, Surface surface, double u, double v, double pixelsPerUnitLength)
+	void WritePixelToBuffer(BrightnessBuffer buffer, Surface surface, double u, double v)
 	{
-		Vector3D position = ApplyUniversalFunction(surface.GetPosition(u, v, time));
+		Vector3D position = camera.ApplyView(surface.GetPosition(u, v, time));
 		// Map point to a pixel that can fit on the buffer
-		int x = (int)System.Math.Floor(position.GetX() * pixelsPerUnitLength);
-		int y = (int)System.Math.Floor(position.GetY() * pixelsPerUnitLength);
+		int x = (int)System.Math.Floor(position.GetX()) + buffer.GetWidth() / 2;
+		int y = (int)System.Math.Floor(position.GetY()) + buffer.GetHeight() / 2;
 		
 		// checks if pixel can be seen
-		if (buffer.IsPixelInBoundaries(x, y) && !buffer.IsPixelBlocked(x, y, position.GetZ())) {
-			double brightness = Math.Max(0.08, Vector3D.DotProduct(sunDirection, surface.GetNormal(u, v, time)));
+		if (position.GetZ() > 0 && buffer.IsPixelInBoundaries(x, y) && !buffer.IsPixelBlocked(x, y, position.GetZ())) {
+			double brightness = ComputeBrightness(surface, u, v);
 			buffer.SetPixel(x, y, position.GetZ(), brightness);
 		}
 	}
 	
-	/*
-	 The function that is apply to all surfaceect positions.
-	 
-	 An orthographic perspective is achieved by returning the position as is.
-	*/
-	Vector3D ApplyUniversalFunction(Vector3D position)
+	// Returns a brightness level in [0, 1] of a point on a surface
+	double ComputeBrightness(Surface surface, double u, double v)
 	{
-		return position; // No changes creates an orthographic perspective
+		return Math.Max(0.08, Vector3D.DotProduct(sunDirection, surface.GetNormal(u, v, time)));
 	}
 	
 	double GetTime()

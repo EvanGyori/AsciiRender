@@ -37,7 +37,19 @@ public class BrightnessBuffer
 	public bool IsPixelBlocked(int x, int y, double z)
 	{
 		// z values of 0 indicate an unset pixel
-		return buffer[x, y].z > 0 && buffer[x, y].z <= z && z > 0;
+		return buffer[x, y].z > 0 && buffer[x, y].z <= z;
+	}
+	
+	// Returns the buffer width
+	public int GetWidth()
+	{
+		return buffer.GetLength(0);
+	}
+	
+	// Returns the buffer height
+	public int GetHeight()
+	{
+		return buffer.GetLength(1);
 	}
 	
 	public override string ToString()
