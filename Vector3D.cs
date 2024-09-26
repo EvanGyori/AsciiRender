@@ -1,6 +1,6 @@
 using Math = System.Math;
 
-public class Vector3D
+public struct Vector3D
 {
 	double x, y, z;
 	
@@ -15,6 +15,7 @@ public class Vector3D
 	public double GetY() => y;
 	public double GetZ() => z;
 	
+	// Returns the length of the vector
 	public double GetLength()
 	{
 		return System.Math.Sqrt(x * x + y * y + z * z);
@@ -45,22 +46,25 @@ public class Vector3D
 		return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 	}
 	
-	// Adds two vectors
+	// Adds two vectors as expected
 	public static Vector3D operator +(Vector3D lhs, Vector3D rhs)
 	{
 		return new Vector3D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
 	}
 	
+	// Subtracts two vectors as expected
 	public static Vector3D operator -(Vector3D lhs, Vector3D rhs)
 	{
 		return new Vector3D(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 	}
 	
-	public static Vector3D operator *(Vector3D vector, double factor)
+	// Multiplies a vector by a scalar as expected
+	public static Vector3D operator *(Vector3D vector, double scalar)
 	{
-		return new Vector3D(factor * vector.x, factor * vector.y, factor * vector.z);
+		return new Vector3D(scalar * vector.x, scalar * vector.y, scalar * vector.z);
 	}
 	
+	// Rotates the vector around the x axis first, then y, and then the z axis.
 	public void RotateXYZ(Vector3D rotation)
 	{
 		RotateAboutXAxis(rotation.x);
@@ -68,6 +72,10 @@ public class Vector3D
 		RotateAboutZAxis(rotation.z);
 	}
 	
+	/* 
+	 Rotates the vector around the x axis.
+	 yzAngle is an angle made from the +y axis towards the +z axis.
+	*/
 	public void RotateAboutXAxis(double yzAngle)
 	{
 		double y_0 = y;
@@ -75,6 +83,10 @@ public class Vector3D
 		z = y_0 * Math.Sin(yzAngle) + z * Math.Cos(yzAngle);
 	}
 	
+	/*
+	 Rotates the vector around the y axis.
+	 xzAngle is an angle made from the +x axis towards the +z axis.
+	*/
 	public void RotateAboutYAxis(double xzAngle)
 	{
 		double x_0 = x;
@@ -82,6 +94,10 @@ public class Vector3D
 		z = x_0 * Math.Sin(xzAngle) + z * Math.Cos(xzAngle);
 	}
 	
+	/*
+	 Rotates the vector around the z axis.
+	 xyAngle is an angle made from the +x axis towards the +y axis.
+	*/
 	public void RotateAboutZAxis(double xyAngle)
 	{
 		double x_0 = x;
