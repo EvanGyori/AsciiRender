@@ -5,7 +5,7 @@ const double PI = System.Math.PI;
 Vector3D sunDirection = new(-1, -0.5, -1);
 sunDirection.Normalize();
 
-Camera camera = new(1, PI / 40, new Vector3D(0, 0, 0), new Vector3D(0, PI / 4, 0));
+Camera camera = new(PI / 40, new Vector3D(0, 0, 0), new Vector3D(0, PI / 4, 0));
 
 /*
 Manager game = new(sunDirection, 5.0,

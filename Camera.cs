@@ -1,14 +1,13 @@
 public class Camera
 {
-	double pixelsPerUnitLength;
+	double FOV;
 	double FOVFactor;
 	Vector3D position;
 	Vector3D rotation;
 	
-	public Camera(double pixelsPerUnitLength, double FOV, Vector3D position, Vector3D rotation)
+	public Camera(double FOV, Vector3D position, Vector3D rotation)
 	{
-		this.pixelsPerUnitLength = pixelsPerUnitLength;
-		this.FOVFactor = ComputeFOVFactor(FOV);
+		SetFOV(FOV);
 		this.position = position;
 		this.rotation = rotation;
 	}
@@ -16,7 +15,35 @@ public class Camera
 	// Moves a point based on how the camera is set up
 	public Vector3D ApplyView(Vector3D point)
 	{
-		return ApplyScaling(ApplyPerspectiveView(ApplyRotation(ApplyPosition(point))));
+		return ApplyPerspectiveView(ApplyRotation(ApplyPosition(point)));
+	}
+	
+	public void SetPosition(Vector3D position)
+	{
+		this.position = position;
+	}
+	
+	public void ChangePosition(Vector3D displacement, bool relativeToRotation)
+	{
+		if (relativeToRotation)
+			displacement.RotateXYZ(rotation);
+		position += displacement;
+	}
+	
+	public void SetRotation(Vector3D rotation)
+	{
+		this.rotation = rotation;
+	}
+	
+	public void ChangeRotation(Vector3D rotation)
+	{
+		this.rotation += rotation;
+	}
+	
+	// Changes FOV by the amount, delta in radians. The FOV is clamped between 0 and 180 degrees.
+	public void ChangeFOV(double delta)
+	{
+		SetFOV(System.Math.Clamp(FOV + delta, 0.01, System.Math.PI - 0.01));
 	}
 	
 	// Moves a point based on camera's position
@@ -47,17 +74,15 @@ public class Camera
 		);
 	}
 	
-	Vector3D ApplyScaling(Vector3D point)
+	// Call this method when setting the FOV so that the FOVFactor is computed as well
+	void SetFOV(double FOV)
 	{
-		return new Vector3D(
-			point.GetX() * pixelsPerUnitLength,
-			point.GetY() * pixelsPerUnitLength,
-			point.GetZ()
-		);
+		this.FOV = FOV;
+		FOVFactor = ComputeFOVFactor();
 	}
 	
 	// Returns the factor used in the perspective equation for the given FOV in radians
-	double ComputeFOVFactor(double FOV)
+	double ComputeFOVFactor()
 	{
 		return 1 / System.Math.Tan(FOV / 2);
 	}

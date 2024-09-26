@@ -13,6 +13,7 @@ public class Manager
 	Surface[] surfaces;
 	Renderer renderer;
 	Camera camera;
+	Controller controller;
 	
 	// sunDirection must be a unit vector pointing in the direction of the sun.
 	public Manager(Vector3D sunDirection, Camera camera, params Surface[] surfaces)
@@ -21,6 +22,8 @@ public class Manager
 		this.surfaces = surfaces;
 		renderer = new Renderer(sunDirection, camera);
 		this.camera = camera;
+		
+		controller = new Controller(camera);
 	}
 	
 	// Prints the surfaces in an infinite loop
@@ -28,25 +31,14 @@ public class Manager
 	{
 		Clear();
 		while (true)
-		{
-			/*
-			if (KeyAvailable) {
-				var key = ReadKey().Key;
-				if (key == System.ConsoleKey.W) {
-					pixelsPerUnitLength += 0.1;
-				} else if (key == System.ConsoleKey.S) {
-					pixelsPerUnitLength -= 0.1;
-				}
-			}
-			*/
 			Update();
-		}
 	}
 	
 	// Handles each frame
 	void Update()
 	{
 		DateTime initialTime = DateTime.Now;
+		controller.Update();
 		CursorVisible = false;
 		DrawScreen();
 		DrawDebug(initialTime);
