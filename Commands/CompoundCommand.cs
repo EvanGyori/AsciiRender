@@ -1,3 +1,5 @@
+namespace Commands;
+
 // Command that executes any number of commands
 public class CompoundCommand : Command
 {

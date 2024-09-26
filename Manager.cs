@@ -9,11 +9,14 @@ using TimeSpan = System.TimeSpan;
 public class Manager
 {
 	Vector3D sunDirection;
-	double FPSLimit = 0;
-	Surface[] surfaces;
-	Renderer renderer;
 	Camera camera;
+	Surface[] surfaces;
+	
+	Renderer renderer;
 	Controller controller;
+	double FPSLimit = 0;
+	BoolBox showHelp = new(false);
+	BoolBox showDebug = new(true);
 	
 	// sunDirection must be a unit vector pointing in the direction of the sun.
 	public Manager(Vector3D sunDirection, Camera camera, params Surface[] surfaces)
@@ -23,7 +26,7 @@ public class Manager
 		renderer = new Renderer(sunDirection, camera);
 		this.camera = camera;
 		
-		controller = new Controller(camera);
+		controller = new Controller(camera, showHelp, showDebug);
 	}
 	
 	// Prints the surfaces in an infinite loop
@@ -40,8 +43,13 @@ public class Manager
 		DateTime initialTime = DateTime.Now;
 		controller.Update();
 		CursorVisible = false;
-		DrawScreen();
-		DrawDebug(initialTime);
+		
+		if (!showHelp.value) {
+			DrawScreen();
+			if (showDebug.value)
+				DrawDebug(initialTime);
+		}
+		
 		if (FPSLimit > 0)
 			LimitFPS(initialTime);
 	}
@@ -67,9 +75,18 @@ public class Manager
 	// Displays debug info such as FPS
 	void DrawDebug(DateTime initialTime)
 	{
+		// FPS
 		TimeSpan dt = DateTime.Now.Subtract(initialTime);
 		int FPS = (int)Math.Ceiling(1.0 / dt.TotalSeconds);
-		int limitedFPS = Math.Min(FPS, (int)Math.Floor(FPSLimit));
-		WriteLine("FPS: " + FPS + "  limited FPS: " + limitedFPS);
+		Write("FPS: " + FPS);
+		if (FPSLimit > 0)
+			Write(" limited at " + FPSLimit);
+		
+		// Camera
+		double FOVInDegrees = Math.Floor(10 * camera.GetFOV() * 180 / Math.PI) / 10;
+		Write("\tFOV: " + FOVInDegrees);
+		WriteLine();
+		
+		Write("Press H for help");
 	}
 }

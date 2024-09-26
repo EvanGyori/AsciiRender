@@ -46,6 +46,11 @@ public class Camera
 		SetFOV(System.Math.Clamp(FOV + delta, 0.01, System.Math.PI - 0.01));
 	}
 	
+	public double GetFOV()
+	{
+		return FOV;
+	}
+	
 	// Moves a point based on camera's position
 	Vector3D ApplyPosition(Vector3D point)
 	{

@@ -31,7 +31,7 @@ public class Renderer
 		if (screenWidth == 0)
 			screenWidth = System.Console.WindowWidth - 1;
 		if (screenHeight == 0)
-			screenHeight = System.Console.WindowHeight - 3;
+			screenHeight = System.Console.WindowHeight - 4;
 		
 		BrightnessBuffer buffer = new(screenWidth, screenHeight);
 		time = GetTime();

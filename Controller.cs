@@ -12,9 +12,9 @@ public class Controller
 	double rotateSpeed = 0.1;
 	double deltaFOV = System.Math.PI / 180;
 	
-	public Controller(Camera camera)
+	public Controller(Camera camera, BoolBox showHelp, BoolBox showDebug)
 	{
-		SetDefaultKeyBindings(camera);
+		SetDefaultKeyBindings(camera, showHelp, showDebug);
 	}
 	
 	// Checks and handles keyboard input
@@ -28,7 +28,7 @@ public class Controller
 		}
 	}
 	
-	void SetDefaultKeyBindings(Camera camera)
+	void SetDefaultKeyBindings(Camera camera, BoolBox showHelp, BoolBox showDebug)
 	{
 		////////////
 		// CAMERA //
@@ -59,5 +59,20 @@ public class Controller
 		
 		// Reset rotation and FOV to default
 		keyBindings.Add(Keys.M, new Commands.RotateCamera(camera, new Vector3D(0, 0, 0), true));
+		
+		///////////
+		// OTHER //
+		///////////
+		
+		// Toggle help, the order of command execution does matter
+		// since DrawHelp relies on the value of showHelp
+		keyBindings.Add(Keys.H, new Commands.CompoundCommand(
+			new Commands.ToggleBoolean(showHelp),
+			new Commands.DrawHelp(showHelp)));
+		
+		// Toggle debugging
+		keyBindings.Add(Keys.G, new Commands.CompoundCommand(
+			new Commands.ClearConsole(),
+			new Commands.ToggleBoolean(showDebug)));
 	}
 }
