@@ -27,8 +27,30 @@ Pressing various keys moves the camera and adjusts other environment settings. P
 The back of surfaces are culled so that when you go inside an object you dont see its surface. Not much reason for this, just wanted to figure out how to do it.
 
 ## Usage
+### Windows or Mac (using visual studio)
+Install visual studio if not already installed
 
+Run `AsciiRender.csproj` using visual studio.
 
+Go to Debug -> Start Debugging
+
+### Linux (using dotnet)
+Install dotnet, the following command works on my computer
+
+```
+sudo apt-get install -y dotnet-sdk-8.0
+```
+
+Run the following inside the repository
+```
+dotnet run
+```
+
+### Adding Stuff
+
+#### New Surface
+
+#### Decorators
 
 ## Details
 
