@@ -5,6 +5,9 @@ public class Camera
 	Vector3D position;
 	Vector3D rotation;
 	
+	// An orthographic view is used if set to false
+	bool perspectiveView = true;
+	
 	public Camera(double FOV, Vector3D position, Vector3D rotation)
 	{
 		SetFOV(FOV);
@@ -15,7 +18,18 @@ public class Camera
 	// Moves a point based on how the camera is set up
 	public Vector3D ApplyView(Vector3D point)
 	{
-		return ApplyPerspectiveView(ApplyRotation(ApplyPosition(point)));
+		Vector3D newPoint = ApplyRotation(ApplyPosition(point));
+		return perspectiveView ? ApplyPerspectiveView(newPoint) : newPoint;
+	}
+	
+	// Returns true if the normal of the face is pointing towards the camera such that the front is seen
+	public bool IsFrontFace(Vector3D position, Vector3D normal)
+	{
+		if (perspectiveView) {
+			return 0 >= Vector3D.DotProduct(ApplyRotation(ApplyPosition(position)), ApplyRotation(normal));
+		} else {
+			return 0 >= Vector3D.DotProduct(new Vector3D(0, 0, 1), ApplyRotation(normal));
+		}
 	}
 	
 	public void SetPosition(Vector3D position)

@@ -10,6 +10,8 @@ public class Renderer
 	readonly Camera camera;
 	double time;
 	
+	bool cullBackFaces = true;
+	
 	/*
 	 sunDirection must be a normal vector pointing from the center to where the sun is at
 	 to determine the direction of light.
@@ -72,22 +74,28 @@ public class Renderer
 	// For specific u and v values, determines and writes a pixel of an surface to the brightness buffer
 	void WritePixelToBuffer(BrightnessBuffer buffer, Surface surface, double u, double v)
 	{
-		Vector3D position = camera.ApplyView(surface.GetPosition(u, v, time));
+		// Original position stored so that it does not need to be recalculated
+		Vector3D position = surface.GetPosition(u, v, time);
+		Vector3D positionFromView = camera.ApplyView(surface.GetPosition(u, v, time));
 		// Map point to a pixel that can fit on the buffer
-		int x = (int)System.Math.Floor(position.GetX()) + buffer.GetWidth() / 2;
-		int y = (int)System.Math.Floor(position.GetY()) + buffer.GetHeight() / 2;
+		int x = (int)System.Math.Floor(positionFromView.GetX()) + buffer.GetWidth() / 2;
+		int y = (int)System.Math.Floor(positionFromView.GetY()) + buffer.GetHeight() / 2;
 		
 		// checks if pixel can be seen
-		if (position.GetZ() > 0 && buffer.IsPixelInBoundaries(x, y) && !buffer.IsPixelBlocked(x, y, position.GetZ())) {
-			double brightness = ComputeBrightness(surface, u, v);
-			buffer.SetPixel(x, y, position.GetZ(), brightness);
+		if (positionFromView.GetZ() > 0 && buffer.IsPixelInBoundaries(x, y)
+				&& !buffer.IsPixelBlocked(x, y, positionFromView.GetZ())) {
+			Vector3D normal = surface.GetNormal(u, v, time);
+			if (!cullBackFaces || camera.IsFrontFace(position, normal)) {
+				double brightness = ComputeBrightness(normal);
+				buffer.SetPixel(x, y, positionFromView.GetZ(), brightness);
+			}
 		}
 	}
 	
 	// Returns a brightness level in [0, 1] of a point on a surface
-	double ComputeBrightness(Surface surface, double u, double v)
+	double ComputeBrightness(Vector3D normal)
 	{
-		return Math.Max(0.08, Vector3D.DotProduct(sunDirection, surface.GetNormal(u, v, time)));
+		return Math.Max(0.08, Vector3D.DotProduct(sunDirection, normal));
 	}
 	
 	double GetTime()

@@ -27,7 +27,7 @@ public class Donut : Surface
 	}
 	
 	public override int GetUSteps() => 100;
-	public override int GetVSteps() => 100;
+	public override int GetVSteps() => 30;
 	
 	public override Vector3D GetDerivativeWithU(double u, double v, double time)
 	{
