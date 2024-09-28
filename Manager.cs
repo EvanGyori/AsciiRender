@@ -81,6 +81,8 @@ public class Manager
 		Write("FPS: " + FPS);
 		if (FPSLimit > 0)
 			Write(" limited at " + FPSLimit);
+		else
+			Write("  "); // Prevents FOV from being printed right after
 		
 		// Camera
 		double FOVInDegrees = Math.Floor(10 * camera.GetFOV() * 180 / Math.PI) / 10;
