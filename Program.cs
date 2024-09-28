@@ -13,19 +13,20 @@ Surface[] surfaces;
 //surfaces = [new Decs.Position(new Vector3D(0.0, 0.0, 15.0), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Donut(5, 1)))];
 
 // Spinning Cube
-surfaces = [new Decs.Position(new Vector3D(0, 0, 30), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Cuboid(10, 10, 10)))];
+//surfaces = [new Decs.Position(new Vector3D(0, 0, 30), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Cuboid(10, 10, 10)))];
 
-// Swirly Thing and Donut
-/*
+// Swirly Thing and Donut and Cube
 surfaces = [
 	new Decs.Position(new Vector3D(-5.0, 0.0, 10.0),
-		new Decs.Spinning(new Vector3D(1, 1, 0),
+		new Decs.Rotation(new Vector3D(1, 1, 0),
 			new Surfaces.Donut(5, 1))),
-	new Decs.Position(new Vector3D(12.0, 0.0, 5.0),
-		new Decs.Spinning(new Vector3D(0, 1, 0),
-			new Surfaces.Swirly()))
+	new Decs.Position(new Vector3D(12.0, 0.0, 10.0),
+		new Decs.Rotation(new Vector3D(0, 1, 0),
+			new Surfaces.Swirly())),
+	new Decs.Position(new Vector3D(-20, 0, 10),
+		new Decs.Rotation(new Vector3D(1, 1, 0),
+			new Surfaces.Cuboid(6, 3, 10)))
 ];
-*/
 
 // Aisle of donuts
 /*
