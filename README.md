@@ -4,7 +4,8 @@ The program takes a different approach to rendering 3D objects from the conventi
 
 ## Features
 ### Spinning Donut
-Who could want anything more
+[Equation](https://www.desmos.com/3d/hlziur9zvc)
+
 ![](Photos/SpinningDonut.gif)
 
 
