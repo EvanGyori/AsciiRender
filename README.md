@@ -35,11 +35,7 @@ Run `AsciiRender.csproj` using visual studio.
 Go to Debug -> Start Debugging
 
 ### Linux (using dotnet)
-Install dotnet, the following command works on my computer
-
-```
-sudo apt-get install -y dotnet-sdk-8.0
-```
+[Install dotnet](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
 
 Run the following inside the repository
 ```
@@ -49,13 +45,26 @@ dotnet run
 ### Adding Stuff
 
 #### New Surface
+Create a subclass of the Surface class and override each abstract method. The GetUSteps and GetVSteps methods determine how many parts to discretive the domain in the GetDomain function. These two methods may be removed in the future but for now, tinker with it until the object is rendered in full with no holes.
+
+Two other methods require knowing how to take a derivative.
+
+Look at `Plane.cs` for a simple example.
+
+Once the subclass is complete. pass an instance into the surfaces array in `Program.cs` so that it is shown in the world.
 
 #### Decorators
+In order to move, rotate, or do any modular things to surfaces, decorators are used.
+
+Examples of their use can be seen in `Program.cs` and to create a new ones requires subclassing the Decorator class.
 
 ## Details
 
 ### Simplified Class Diagram
+This is the diagram I used to plan the project. It only includes the main classes.
 
-### Resulting Class Diagram
+![](Photos/ClassDiagram.png)
+
+The dashed lines indicate a has-a relationship with the arrowhead. The sold lines indicate an inheritance from the class at the arrowhead.
 
 ### Math
