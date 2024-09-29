@@ -5,15 +5,15 @@ const double PI = System.Math.PI;
 Vector3D sunDirection = new(1, -1, -1);
 sunDirection.Normalize();
 
-Camera camera = new(PI / 40, new Vector3D(0, 0, 0), new Vector3D(0, 0, 0));
+Camera camera = new(PI / 2, new Vector3D(0, 0, 0), new Vector3D(0, 0, 0));
 
 Surface[] surfaces;
 
 // Spinning Donut
-//surfaces = [new Decs.Position(new Vector3D(0.0, 0.0, 15.0), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Donut(5, 1)))];
+surfaces = [new Decs.Position(new Vector3D(0.0, 0.0, 20.0), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Donut(5, 1)))];
 
 // Spinning Cube
-surfaces = [new Decs.Position(new Vector3D(0, 0, 30), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Cuboid(10, 10, 10)))];
+//surfaces = [new Decs.Position(new Vector3D(0, 0, 30), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Cuboid(10, 10, 10)))];
 
 // Swirly Thing and Donut
 /*
@@ -47,7 +47,7 @@ int length = 5;
 surfaces = new Surface[length * length];
 for (int x = 0; x < length; x++) {
 	for (int y = 0; y < length; y++) {
-		surfaces[x + y * length] = new Decs.Position(new Vector3D(15 * x, 15 * y, 15.0),
+		surfaces[x + y * length] = new Decs.Position(new Vector3D(15 * (x - length / 2) , 15 * (y - length / 2), 15 * length),
 										new Decs.Spinning(new Vector3D(0.5 * x, 0.5 * y, 0),
 											new Surfaces.Donut(4, 1)));
 	}
