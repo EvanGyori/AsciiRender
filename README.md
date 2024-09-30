@@ -75,7 +75,7 @@ Discretizing UV plane. computing brightness. Camera. Perspective View. Rotations
 
 The domain of the parametric surface (a UV plane) is split into distrete steps. A loop iterates over these steps giving a (u, v) coordinate which gives a (x, y, z) coordinate by the surface equation where x and y are the screen coordinates and z is depth.
 
-Now this pixel needs some brightness. The normal of the surface at a point can be found by taking the cross product with two lines tangent to the point. Let $\vec{r}(u, v)$ be a position function for the surface. Holding u constant at the point yields a line whose tangent is $\frac{\partial \vec{r}}{\partial v}$. Holding v constant yields $\frac{\partial \vec{r}}{\partial u}$. Thus the normal is $\frac{\partial \vec{r}}{\partial v} \times \frac{\partial \vec{r}}{\partial u}$.
+Now this pixel needs some brightness. The normal of the surface at a point can be found by taking the cross product with two lines tangent to the point. Let $\vec{r}(u, v)$ be a position function for the surface. Holding u constant at the point yields a line whose tangent is $\frac{\partial \vec{r}}{\partial v}$. Holding v constant yields $\frac{\partial \vec{r}}{\partial u}$. Thus the normal is $\frac{\partial \vec{r}}{\partial u} \times \frac{\partial \vec{r}}{\partial v}$.
 
 The more a surface "points" towards the sun, the brighter it is. The normal is the direction the surface is pointing so a dot product between the sun vector and the unit normal vector yields a value between -1 and 1. Where 1 is looking directly at the sun and -1 is looking directly away. This value is used for brightness.
 
@@ -84,3 +84,19 @@ The more a surface "points" towards the sun, the brighter it is. The normal is t
 In reality, there is no camera, just shifting of the whole world. When the camera moves left, the world shifts to the right. Similarly, camera rotations apply an opposite rotation to the world about the origin.
 
 The perspective view is a bit more complicated. The final equation can be found [here](https://www.desmos.com/geometry/rupqiij9no).
+
+We want to achieve a view that looks like the following
+
+![](Photos/FOVGraph.png)
+
+On the y-axis is the depth, $z$, and on the x-axis is the original position, $x$. Everything in the highlighted area is a point to be included in our view. Essentially, the further away a point is --higher up the graph-- a wider range of x values is included in our view --we can see an entire building at a distance but only the wall when its in our face.
+
+The equation for the graph is $c|x| \leq z$ where $c$ is some constant determining the slope of the lines. Changing $c$ changes the FOV.
+
+![](Photos/BeautifulDrawing.png)
+
+Then we have $c = \cot(\frac{\theta}{2})$.
+
+Rearranging $c|x| \leq z$ yields $\frac{|x|\cot(\frac{\theta}{2})}{z} \leq 1$. Now let $x_f$ be the actual output position on the screen and $w$ be the width of the screen. We could set $|x_f| = \frac{|x|\cot(\frac{\theta}{2})}{z}$ which gives $|x_f| \leq 1$ but that would mean we only see $x$ values from -1 to 1. We actually see values from $-w$ to $w$. so first obtain $\frac{w|x|\cot(\frac{\theta}{2})}{z} \leq w$. This gives us the final equation:
+
+$x_f = \frac{w|x|\cot(\frac{\theta}{2})}{z}$
