@@ -26,8 +26,8 @@ public class Donut : Surface
 		return new Rect(0, 0, 2 * Math.PI, 2 * Math.PI);
 	}
 	
-	public override int GetUSteps() => 200;
-	public override int GetVSteps() => 100;
+	public override int GetUSteps() => 150;
+	public override int GetVSteps() => 75;
 	
 	public override Vector3D GetDerivativeWithU(double u, double v, double time)
 	{
