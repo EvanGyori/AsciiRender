@@ -1,6 +1,6 @@
 # ASCII Render Engine
 
-The program takes a different approach to rendering 3D objects from the conventional approach of using rays from the camera, or whatever the conventional approach is. The way it works requires that every 3D object be described by a parametric surface equation. Refer to [Details](#details) for the juicy math. Refer to [Usage](#usage) to run the program or add in your own cool shapes.
+The program takes a different approach to rendering 3D objects from the conventional approach of using rays from the camera, or whatever the conventional approach is. The way it works requires that every 3D object be described by a parametric surface equation. Refer to [Details](#details) for the juicy math. Refer to [Usage](#usage) to run the program or add your own cool shapes.
 
 ## Features
 ### Spinning Donut
@@ -24,20 +24,20 @@ Pressing various keys moves the camera and adjusts other environment settings. P
 ![](Photos/MovingCamera.gif)
 
 ### Backface culling
-The back of surfaces are culled so that when you go inside an object you dont see its surface. Not much reason for this, just wanted to figure out how to do it.
+The back of surfaces are culled so that when you go inside an object you don't see its surface. Not much reason for this, just wanted to do it.
 
 ## Usage
-### Windows or Mac (using visual studio)
-Install visual studio if not already installed
+### Windows or Mac (using Visual Studio)
+Install Visual Studio if not already installed
 
-Run `AsciiRender.csproj` using visual studio.
+Run `AsciiRender.csproj` using Visual Studio.
 
 Go to Debug -> Start Debugging
 
 ### Linux (using dotnet)
 [Install dotnet](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
 
-Run the following inside the repository
+Run the following inside the repository.
 ```
 dotnet run
 ```
@@ -47,7 +47,7 @@ dotnet run
 #### New Surface
 Create a subclass of the Surface class and override each abstract method. The GetUSteps and GetVSteps methods determine how many parts to discretive the domain in the GetDomain function. These two methods may be removed in the future but for now, tinker with it until the object is rendered in full with no holes.
 
-Two other methods require knowing how to take a derivative.
+Also, overriding two other methods requires knowing how to take a derivative.
 
 Look at `Plane.cs` for a simple example.
 
@@ -56,36 +56,34 @@ Once the subclass is complete. pass an instance into the surfaces array in `Prog
 #### Decorators
 In order to move, rotate, or do any modular things to surfaces, decorators are used.
 
-Examples of their use can be seen in `Program.cs` and to create a new ones requires subclassing the Decorator class.
+Examples of their use can be seen in `Program.cs` and to create a new one requires subclassing Decorator.
 
 ## Details
 
 ### Simplified Class Diagram
-This is the diagram I used to plan the project. It only includes the main classes.
+This is the general structure of the classes.
 
 ![](Photos/ClassDiagram.png)
 
-The dashed lines indicate a has-a relationship with the arrowhead. The sold lines indicate an inheritance from the class at the arrowhead.
+The dashed lines indicate a has-a relationship with the arrowhead. The solid lines indicate an inheritance from the class at the arrowhead.
 
 ### Math
 
 #### Drawing Shapes
 
-Discretizing UV plane. computing brightness. Camera. Perspective View. Rotations
-
-The domain of the parametric surface (a UV plane) is split into distrete steps. A loop iterates over these steps giving a (u, v) coordinate which gives a (x, y, z) coordinate by the surface equation where x and y are the screen coordinates and z is depth.
+The domain of the parametric surface (a UV plane) is split into discrete steps. A loop iterates over these steps giving a (u, v) coordinate which gives a (x, y, z) coordinate by the surface equation. x and y are the screen coordinates and z is depth.
 
 Now this pixel needs some brightness. The normal of the surface at a point can be found by taking the cross product with two lines tangent to the point. Let $\vec{r}(u, v)$ be a position function for the surface. Holding u constant at the point yields a line whose tangent is $\frac{\partial \vec{r}}{\partial v}$. Holding v constant yields $\frac{\partial \vec{r}}{\partial u}$. Thus the normal is $\frac{\partial \vec{r}}{\partial u} \times \frac{\partial \vec{r}}{\partial v}$.
 
-The more a surface "points" towards the sun, the brighter it is. The normal is the direction the surface is pointing so a dot product between the sun vector and the unit normal vector yields a value between -1 and 1. Where 1 is looking directly at the sun and -1 is looking directly away. This value is used for brightness.
+The more a surface "points" towards the sun, the brighter it is. The normal is the direction the surface points. So a dot product between the sun vector and the unit normal vector yields a value between -1 and 1. Where 1 is looking directly at the sun and -1 is looking directly away. This value is used for brightness.
 
 #### Camera
 
-In reality, there is no camera, just shifting of the whole world. When the camera moves left, the world shifts to the right. Similarly, camera rotations apply an opposite rotation to the world about the origin.
+In reality, there is no camera, just a shifting of the whole world. When the camera moves left, the world shifts to the right. Similarly, camera rotations apply an opposite rotation to the world about the origin.
 
 The perspective view is a bit more complicated. The final equation can be found [here](https://www.desmos.com/geometry/rupqiij9no).
 
-We want to achieve a view that looks like the following
+We want to achieve a view that looks like the following:
 
 ![](Photos/FOVGraph.png)
 
