@@ -77,9 +77,9 @@ public class Renderer
 		// Original position stored so that it does not need to be recalculated
 		Vector3D position = surface.GetPosition(u, v, time);
 		Vector3D positionFromView = camera.ApplyView(surface.GetPosition(u, v, time));
-		// Map point to a pixel that can fit on the buffer
-		int x = (int)System.Math.Floor(positionFromView.GetX() * buffer.GetWidth() / 2) + buffer.GetWidth() / 2;
-		int y = (int)System.Math.Floor(positionFromView.GetY() * buffer.GetWidth() / 2) + buffer.GetHeight() / 2;
+		// Map point to a point from -1 to 1 and then to a pixel that can fit on the buffer
+		int x = (int)System.Math.Floor(positionFromView.GetX() * System.Math.Min(buffer.GetWidth(), buffer.GetHeight()) / 2) + buffer.GetWidth() / 2;
+		int y = (int)System.Math.Floor(positionFromView.GetY() * System.Math.Min(buffer.GetWidth(), buffer.GetHeight()) / 2) + buffer.GetHeight() / 2;
 		
 		// checks if pixel can be seen
 		if (positionFromView.GetZ() > 0 && buffer.IsPixelInBoundaries(x, y)
