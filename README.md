@@ -97,4 +97,4 @@ Then we have $c = \cot(\frac{\theta}{2})$.
 
 Rearranging $c|x| \leq z$ yields $\frac{|x|\cot(\frac{\theta}{2})}{z} \leq 1$. Now let $x_f$ be the actual output position on the screen and $w$ be the width of the screen. We could set $|x_f| = \frac{|x|\cot(\frac{\theta}{2})}{z}$ which gives $|x_f| \leq 1$ but that would mean we only see $x$ values from -1 to 1. We actually see values from $-w$ to $w$. so first obtain $\frac{w|x|\cot(\frac{\theta}{2})}{z} \leq w$. This gives us the final equation:
 
-$x_f = \frac{w|x|\cot(\frac{\theta}{2})}{z}$
+$x_f = \frac{wx*\cot(\frac{\theta}{2})}{z}$
