@@ -16,7 +16,7 @@ public class Matrix
 
 	public static Matrix operator*(Matrix lhs, Matrix rhs)
 	{
-		if (lhs.entries.Getlength(1) != rhs.entries.GetLength(0)) {
+		if (lhs.entries.GetLength(1) != rhs.entries.GetLength(0)) {
 			throw new System.ArgumentException("The number of columns in the left matrix must match the number of rows in the right matrix to do matrix multiplication");
 		}
 
@@ -50,7 +50,7 @@ public class Matrix
 		double cos = Math.Cos(yzAngle);
 		double sin = Math.Sin(yzAngle);
 		Matrix output = new(3, 3);
-		output.entries = {
+		output.entries = new double[3,3] {
 			{1, 0, 0},
 			{0, cos, -sin},
 			{0, sin, cos}
@@ -63,7 +63,7 @@ public class Matrix
 		double cos = Math.Cos(xzAngle);
 		double sin = Math.Sin(xzAngle);
 		Matrix output = new(3, 3);
-		output.entries = {
+		output.entries = new double[3,3] {
 			{cos, 0, -sin},
 			{0, 1, 0},
 			{sin, 0, cos}
@@ -76,7 +76,7 @@ public class Matrix
 		double cos = Math.Cos(xyAngle);
 		double sin = Math.Sin(xyAngle);
 		Matrix output = new(3, 3);
-		output.entries = {
+		output.entries = new double[3,3] {
 			{cos, -sin, 0},
 			{sin, cos, 0},
 			{0, 0, 1}
