@@ -1,6 +1,11 @@
 // Classes that implement the Surface interface are parametric surfaces that can be used for calculations or drawn
 public abstract class Surface
 {
+	// Called once per frame prior to drawing
+	public virtual void Update(double time)
+	{
+	}
+
 	// x, y, and z components of the surface parameterized by u and v.
 	public abstract Vector3D GetPosition(double u, double v, double time);
 	

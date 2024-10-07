@@ -38,6 +38,7 @@ public class Renderer
 		BrightnessBuffer buffer = new(screenWidth, screenHeight);
 		time = GetTime();
 		foreach (Surface surface in surfaces) {
+			surface.Update(time);
 			WriteSurfaceToBuffer(buffer, surface);
 		}
 		
