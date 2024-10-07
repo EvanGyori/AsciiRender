@@ -103,7 +103,7 @@ $x_f = \frac{w|x|\cot(\frac{\theta}{2})}{z}$
 
 I have heard of quaternions and hope to learn and implement them in the future. However, for now, rotations are done by first rotating a point about the x-axis, then y-axis, and then the z-axis using three separate angles. The following math applies to rotations about the z-axis but is identical for rotations about other axes.
 
-Let $\vec{r} = x\uveci + y\uvecj + z\uveck$ be the position vector pre-rotation. The $z$ coordinate will remain unchanged since we are rotating about the z-axis. To do a rotation, we can think about the positions changing, rotating each vector, making sure magnitude stays the same, and all that stuff. But an easier approach is thinking about the axes just rotating in the opposite direction. Then, when we move the axes back to their original orientation, we will see that the object is rotated.
+Let $\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}$ be the position vector pre-rotation. The $z$ coordinate will remain unchanged since we are rotating about the z-axis. To do a rotation, we can think about the positions changing, rotating each vector, making sure magnitude stays the same, and all that stuff. But an easier approach is thinking about the axes just rotating in the opposite direction. Then, when we move the axes back to their original orientation, we will see that the object is rotated.
 
 Square object prior to rotation:
 
@@ -117,20 +117,20 @@ New axes in place of original axes so that the object has now rotated:
 
 ![](Photos/FinishedRotation.png)
 
-For the rotated axes, let its unit vectors be $\uveci^'$, $\uvecj^'$, and $\uveck^'$.
+For the rotated axes, let its unit vectors be $\hat{i'}$, $\hat{j'}$, and $\hat{k'}$.
 
 ![](Photos/ChangeOfBaseTriangleI.png)
 
-From the image, we have $\uveci = \cos(\theta) \uveci^' + \sin(\theta) \uvecj^'$.
+From the image, we have $\hat{i} = \cos(\theta) \hat{i'} + \sin(\theta) \hat{j'}$.
 
 ![](Photos/ChangeOfBaseTriangleJ.png)
 
-Again from the image: $\uvecj = -\sin(\theta) \uveci^' + \cos(\theta) \uvecj^'$.
+Again from the image: $\hat{j} = -\sin(\theta) \hat{i'} + \cos(\theta) \hat{j'}$.
 
-And since $z$ is unchanged, $\uveck = \uveck^'$.
+And since $z$ is unchanged, $\hat{k} = \hat{k'}$.
 
-Applying these equations to $\vec{r} = x\uveci + y\uvecj + z\uveck$ and simplifying the result gives:
+Applying these equations to $\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}$ and simplifying the result gives:
 
-$\vec{r} = (x * \cos(\theta) - y * \sin(\theta)) \uveci^' + (x * \sin(\theta) + y * \cos(\theta)) \uvecj^' + z \uveck^'$
+$\vec{r} = (x * \cos(\theta) - y * \sin(\theta)) \hat{i'} + (x * \sin(\theta) + y * \cos(\theta)) \hat{j'} + z \hat{k'}$
 
 So, for example, the $x$ coordinate after the rotation is $x * \cos(\theta) - y * \sin(\theta)$ where $x$ and $y$ are the original coordinates.
