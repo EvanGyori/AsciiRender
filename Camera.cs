@@ -4,6 +4,7 @@ public class Camera
 	double FOVFactor;
 	Vector3D position;
 	Vector3D rotation;
+	Matrix rotationMatrix;
 	
 	// An orthographic view is used if set to false
 	bool perspectiveView = true;
@@ -11,8 +12,8 @@ public class Camera
 	public Camera(double FOV, Vector3D position, Vector3D rotation)
 	{
 		SetFOV(FOV);
-		this.position = position;
-		this.rotation = rotation;
+		SetPosition(position);
+		SetRotation(rotation);
 	}
 	
 	// Moves a point based on how the camera is set up
@@ -47,11 +48,12 @@ public class Camera
 	public void SetRotation(Vector3D rotation)
 	{
 		this.rotation = rotation;
+		rotationMatrix = Matrix.XYZRotation(rotation * -1);
 	}
 	
 	public void ChangeRotation(Vector3D rotation)
 	{
-		this.rotation += rotation;
+		SetRotation(this.rotation + rotation);
 	}
 	
 	// Changes FOV by the amount, delta in radians. The FOV is clamped between 0 and 180 degrees.
@@ -76,10 +78,7 @@ public class Camera
 	// Moves a point based on camera's rotation
 	Vector3D ApplyRotation(Vector3D point)
 	{
-		// -1 because everything rotates opposite to the
-		// camera to make the camera appear as rotating the right direction
-		point.RotateXYZ(rotation * -1);
-		return point;
+		return rotationMatrix * point;
 	}
 	
 	// Applies a perspective view opposed to an ordinary

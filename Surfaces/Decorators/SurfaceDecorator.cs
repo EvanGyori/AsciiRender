@@ -10,6 +10,11 @@ public abstract class Decorator : Surface
 		this.next = next;
 	}
 	
+	public override void Update(double time)
+	{
+		next.Update(time);
+	}
+	
 	public override Vector3D GetPosition(double u, double v, double time)
 	{
 		return next.GetPosition(u, v, time);

@@ -10,9 +10,9 @@ public class Spinning : Rotation
 		this.rotationRate = rotationRate;
 	}
 	
-	public override Vector3D GetPosition(double u, double v, double time)
+	public override void Update(double time)
 	{
 		base.SetAngles(rotationRate * time);
-		return base.GetPosition(u, v, time);
+		base.Update(time);
 	}
 }

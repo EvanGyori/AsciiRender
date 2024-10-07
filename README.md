@@ -98,3 +98,39 @@ Then we have $c = \cot(\frac{\theta}{2})$.
 Rearranging $c|x| \leq z$ yields $\frac{|x|\cot(\frac{\theta}{2})}{z} \leq 1$. Now let $x_f$ be the actual output position on the screen and $w$ be the width of the screen. We could set $|x_f| = \frac{|x|\cot(\frac{\theta}{2})}{z}$ which gives $|x_f| \leq 1$ but that would mean we only see $x$ values from -1 to 1. We actually see values from $-w$ to $w$. so first obtain $\frac{w|x|\cot(\frac{\theta}{2})}{z} \leq w$. This gives us the final equation:
 
 $x_f = \frac{wx*\cot(\frac{\theta}{2})}{z}$
+
+#### Rotations
+
+I have heard of quaternions and hope to learn and implement them in the future. However, for now, rotations are done by first rotating a point about the x-axis, then y-axis, and then the z-axis using three separate angles. The following math applies to rotations about the z-axis but is identical for rotations about other axes.
+
+Let $\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}$ be the position vector pre-rotation. The $z$ coordinate will remain unchanged since we are rotating about the z-axis. To do a rotation, we can think about the positions changing, rotating each vector, making sure magnitude stays the same, and all that stuff. But an easier approach is thinking about the axes just rotating in the opposite direction. Then, when we move the axes back to their original orientation, we will see that the object is rotated.
+
+Square object prior to rotation:
+
+![](Photos/NoRotation.png)
+
+New axes to base position vector on:
+
+![](Photos/AxesRotation.png)
+
+New axes in place of original axes so that the object has now rotated:
+
+![](Photos/FinishedRotation.png)
+
+For the rotated axes, let its unit vectors be $\hat{i'}$, $\hat{j'}$, and $\hat{k'}$.
+
+![](Photos/ChangeOfBaseTriangleI.png)
+
+From the image, we have $\hat{i} = \cos(\theta) \hat{i'} + \sin(\theta) \hat{j'}$.
+
+![](Photos/ChangeOfBaseTriangleJ.png)
+
+Again from the image: $\hat{j} = -\sin(\theta) \hat{i'} + \cos(\theta) \hat{j'}$.
+
+And since $z$ is unchanged, $\hat{k} = \hat{k'}$.
+
+Applying these equations to $\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}$ and simplifying the result gives:
+
+$\vec{r} = (x * \cos(\theta) - y * \sin(\theta)) \hat{i'} + (x * \sin(\theta) + y * \cos(\theta)) \hat{j'} + z \hat{k'}$
+
+So, for example, the $x$ coordinate after the rotation is $x * \cos(\theta) - y * \sin(\theta)$ where $x$ and $y$ are the original coordinates.
