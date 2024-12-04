@@ -9,9 +9,19 @@ public class Matrix
 		entries = new double[numRows, numColumns];
 	}
 
+	public Matrix(double[,] entries)
+	{
+		this.entries = entries;
+	}
+
 	public void SetEntry(int row, int column, double value)
 	{
 		entries[row, column] = value;
+	}
+
+	public double GetEntry(int row, int column)
+	{
+		return entries[row, column];
 	}
 
 	public static Matrix operator*(Matrix lhs, Matrix rhs)

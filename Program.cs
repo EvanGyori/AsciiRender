@@ -9,8 +9,10 @@ Camera camera = new(PI / 2, new Vector3D(0, 0, 0), new Vector3D(0, 0, 0));
 
 Surface[] surfaces;
 
+surfaces = [new Decs.Position(new Vector3D(0, 0, 20), new Decs.Quaternion(new Vector3D(1, -1, 0), PI / 4, new Surfaces.Donut(10, 3)))];
+
 // Spinning Donut
-surfaces = [new Decs.Position(new Vector3D(0.0, 0.0, 20.0), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Donut(8, 3)))];
+// surfaces = [new Decs.Position(new Vector3D(0.0, 0.0, 20.0), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Donut(10, 3)))];
 
 // Spinning Cube
 //surfaces = [new Decs.Position(new Vector3D(0, 0, 20), new Decs.Spinning(new Vector3D(1, 1, 0), new Surfaces.Cuboid(12, 12, 12)))];
