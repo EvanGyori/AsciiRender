@@ -45,7 +45,7 @@ dotnet run
 ### Adding Stuff
 
 #### New Surface
-Create a subclass of the Surface class and override each abstract method. The GetUSteps and GetVSteps methods determine how many parts to discretive the domain in the GetDomain function. These two methods may be removed in the future but for now, tinker with it until the object is rendered in full with no holes.
+Create a subclass of the Surface class and override each abstract method. The GetUSteps and GetVSteps methods determine how many parts to discretize the domain into in the GetDomain function. Basically the shape's resolution. These two methods may be removed in the future but for now, tinker with it until the object is rendered in full with no holes.
 
 Also, overriding two other methods requires knowing how to take a derivative.
 
